@@ -1,20 +1,46 @@
 var Listly = function() {
 
   function Listly() {
-    this.tasks = [];
     var self = this;
+    self.tasks = [];
+
+    function addTask(task_name) {
+      self.tasks.push(task_name);
+      if (save()) {
+        return !!$('#tasks').append('<li class="list-group-item">' + task_name + '</li>');
+      }
+      else {
+        return false;
+      }
+    }
+
+    function load() {
+      self.tasks = JSON.parse(localStorage.tasks);
+      $.each(self.tasks, function(index, task_name) {
+        $('#tasks').append('<li class="list-group-item">' + task_name + '</li>');
+      });
+    }
+
+    function save() {
+      try {
+        return (localStorage.tasks = JSON.stringify(self.tasks));
+      }
+      catch(err) {
+        return false;
+      }
+    }
+
+    load();
 
     $('form#new_task').submit(function(ev) {
       ev.preventDefault();
-      var task_name = this.task_name.value;
+      var field = $(this.task_name);
+      var task_name = field.val();
 
-      // Add a list item to #tasks
-      var result = $('#tasks').append('<li class="list-group-item">' + task_name + '</li>');
-      this.task_name.value = '';
-      $(this.task_name).focus();
-
-      // Add the task name to tasks array
-      
+      if (addTask(task_name)) {
+        field.val('');
+      }
+      field.focus().select();
     });
   }
 
