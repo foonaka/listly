@@ -7,25 +7,63 @@ var Listly = function() {
     function addTask(task_name) {
       self.tasks.push(task_name);
       if (save()) {
-        return !!$('#tasks').append('<li class="list-group-item">' + task_name + '</li>');
+        appendToList(task_name);
+        return true;
       }
       else {
         return false;
       }
     }
 
-    function load() {
-      self.tasks = JSON.parse(localStorage.tasks);
-      $.each(self.tasks, function(index, task_name) {
-        $('#tasks').append('<li class="list-group-item">' + task_name + '</li>');
+    function appendToList(task_name) {
+      // Grab a copy of the list item template
+      var li = $('#list_item_template').clone();
+      li.removeAttr('id');
+
+      // Add task name to the <li> template
+      li.find('label').text(task_name);
+
+      // Unhide
+      li.removeClass('hidden');
+
+      // Activate delete button
+      li.find('.btn-danger').click(function() {
+
+        li.remove();
       });
+
+      $('#tasks').append(li);
+    }
+
+    function showFormError(form) {
+      $(form).find('.alert')
+        .html('Something went wrong!')
+        .removeClass('hidden');
+    }
+
+    function supportsLocalStorage() {
+      try {
+        return 'localStorage' in window && window.localStorage !== null;
+      }
+      catch(err) {
+        return false;
+      }
+    }
+
+    function load() {
+      if (supportsLocalStorage() && localStorage.tasks) {
+        self.tasks = JSON.parse(localStorage.tasks);
+        $.each(self.tasks, function(index, task_name) {
+          appendToList(task_name);
+        });
+      }
     }
 
     function save() {
-      try {
+      if (supportsLocalStorage()) {
         return (localStorage.tasks = JSON.stringify(self.tasks));
       }
-      catch(err) {
+      else {
         return false;
       }
     }
@@ -39,6 +77,9 @@ var Listly = function() {
 
       if (addTask(task_name)) {
         field.val('');
+      }
+      else {
+        showFormError(this);
       }
       field.focus().select();
     });
