@@ -18,13 +18,17 @@
   <div class="well col-sm-6 col-sm-offset-3 cols-xs-12">
     <h1>Listly</h1>
     <ol id="tasks" class="list-group">
-
+      <li id="list_item_template" class="list-group-item hidden">
+        <label></label>
+        <button class="btn btn-sm btn-danger">Del</button>
+      </li>
     </ol>
     <form role="form" class="form-inline" id="new_task">
       <label>
         <input type="text" name="task_name" class="form-control">
         <input type="submit" value="Add Task" class="btn btn-sm btn-primary">
       </label>
+      <div class="alert alert-danger hidden"></div>
     </form>
   </div>
 
