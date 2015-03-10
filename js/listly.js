@@ -28,9 +28,23 @@ var Listly = function() {
 
       // Activate delete button
       li.find('.btn-danger').click(function() {
+        //Remove from array
+        self.tasks.splice(self.tasks.indexOf(task_name), 1);
 
+        // $.each(self.tasks, function(index, current_task) {
+        //   if (current_task === task_name) {
+        //     self.tasks.splice(index, 1);
+        //     // Stop looking once we find a match
+        //     return false;
+        //   }
+        // });
+
+        //Save the array to local storage
+        save();
+
+        // Remove item from <ol>
         li.remove();
-      });
+    });
 
       $('#tasks').append(li);
     }
