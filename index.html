@@ -27,6 +27,8 @@
         </div>
       </li>
     </ol>
+
+    <!-- Add Task Form -->
     <form role="form" class="form-inline" id="new_task">
       <label>
         <input type="text" name="task_name" class="form-control">
@@ -37,12 +39,15 @@
         <i class="fa fa-exclamation-triangle"></i> Something went wrong while saving your tasks!
       </div>
     </form>
+    <!-- /Add Task Form -->
 
+    <!-- Edit Form -->
     <form id="edit_form_template" class="form-inline hidden">
-      <input type="text" class="form-control edit-task-name">
+      <input type="text" class="form-control edit-task-name" name="task_name">
       <input type="submit" value="Save" class="btn btn-sm btn-success">
-      <button class="btn btn-sm btn-default">Cancel</button>
+      <button type="button" class="btn btn-sm btn-default">Cancel</button>
     </form>
+    <!-- /Edit Form -->
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

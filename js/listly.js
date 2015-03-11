@@ -55,6 +55,23 @@ var Listly = function() {
 
       name_field.focus().select();
 
+      // Save button handler
+      edit_form.submit(updateTask);
+    }
+
+    function updateTask(ev) {
+      ev.preventDefault();
+      var field = $(this.elements.task_name);
+      var id = field.data('task-id');
+
+      $.each(self.tasks, function(index, task) {
+        if (task.id == id) {
+          task.name = field.val();
+          return false;
+        }
+      });
+      save();
+
     }
 
     function showFormError(form) {
