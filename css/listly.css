@@ -10,4 +10,5 @@ label.completed {
 
 label {
   max-width: 80%;
+  word-wrap: break-word;
 }
