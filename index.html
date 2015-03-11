@@ -6,6 +6,7 @@
 
   <title>Listly</title>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">
   <link rel="stylesheet" href="css/listly.css">
@@ -15,12 +16,15 @@
   <![endif]-->
 </head>
 <body>
-  <div class="well col-sm-6 col-sm-offset-3 cols-xs-12">
+  <div class="well col-sm-8 col-sm-offset-2 cols-xs-12">
     <h1>Listly</h1>
     <ol id="tasks" class="list-group">
       <li id="list_item_template" class="list-group-item hidden">
         <label></label>
-        <button class="btn btn-sm btn-danger">Del</button>
+        <div class="btn-group">
+          <button class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-sm btn-success edit"><i class="fa fa-pencil"></i></button>
+        </div>
       </li>
     </ol>
     <form role="form" class="form-inline" id="new_task">
@@ -28,7 +32,16 @@
         <input type="text" name="task_name" class="form-control">
         <input type="submit" value="Add Task" class="btn btn-sm btn-primary">
       </label>
-      <div class="alert alert-danger hidden"></div>
+      <div class="alert alert-danger alert-dismissable hidden" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <i class="fa fa-exclamation-triangle"></i> Something went wrong while saving your tasks!
+      </div>
+    </form>
+
+    <form id="edit_form_template" class="form-inline hidden">
+      <input type="text" class="form-control edit-task-name">
+      <input type="submit" value="Save" class="btn btn-sm btn-success">
+      <button class="btn btn-sm btn-default">Cancel</button>
     </form>
   </div>
 
