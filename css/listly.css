@@ -3,3 +3,11 @@
   right: 8px;
   top: 8px;
 }
+
+label.completed {
+  text-decoration: line-through;
+}
+
+label {
+  max-width: 80%;
+}

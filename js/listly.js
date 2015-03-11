@@ -17,14 +17,23 @@ var Listly = function() {
     }
 
     function appendToList(task) {
+      var li, label;
       // Grab a copy of the list item template
-      var li = $('#list_item_template').clone();
+      li = $('#list_item_template').clone();
       li.removeAttr('id');
 
       // Add task name and ID to the <li> template
       li.addClass('task');
       li.attr('data-task-id', task.id);
-      li.find('label').append(' ' + task.name);
+
+      label = li.find('label');
+      label.append(' ' + task.name);
+
+      if (task.completed) {
+        label.find('input[type=checkbox]').attr('checked', true);
+        label.addClass('completed');
+      }
+
 
       // Unhide
       li.removeClass('hidden');
@@ -40,7 +49,23 @@ var Listly = function() {
       // Activate the edit button
       li.find('button.edit').click(task, createEditForm);
 
+      li.find('input[type=checkbox]').change(toggleTaskCompletion);
+
       $('#tasks').append(li);
+    }
+
+    function toggleTaskCompletion(ev) {
+      var checkbox = $(this);
+      var task_id = checkbox.closest('li.task').data('task-id');
+      var task = getTaskById(task_id);
+      task.completed = checkbox.prop('checked');
+      if (task.completed) {
+        checkbox.closest('label').addClass('completed');
+      }
+      else {
+        checkbox.closest('label').removeClass('completed');
+      }
+      save();
     }
 
     function createEditForm(ev) {
